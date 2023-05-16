@@ -15,7 +15,7 @@ def format_time(seconds):
 class TimerWidget(QWidget):
     def __init__(self):
         super(TimerWidget, self).__init__()
-        self.setFixedSize(300, 150)
+        self.setFixedSize(326, int(326*0.618)-30)
 
         self.total_time_label = QLabel("Total 0 days 0 hours 0 minutes")
         self.timer_label = QLabel("00:00:00")
@@ -30,8 +30,10 @@ class TimerWidget(QWidget):
         self.last_start_week = 0
 
         font_total_timer = QFont("Arial")
-        font = QFont("Arial", 16)
-        font_timer = QFont("Arial", 40)
+        font = QFont("Arial")
+        font.setPixelSize(20)
+        font_timer = QFont("Arial")
+        font_timer.setPixelSize(50)
         self.total_time_label.setFont(font_total_timer)
         self.timer_label.setFont(font_timer)
         self.start_button.setFont(font)
@@ -56,7 +58,7 @@ class TimerWidget(QWidget):
         layout.addWidget(self.total_time_label, alignment=Qt.AlignCenter)
 
         self.setLayout(layout)
-        self.setWindowTitle("Worker's Timer")
+        self.setWindowTitle("WorkTimer")
         self.load_timer_data()
         self.update_total_timer_label()
         self.timer_label.setText(format_time(self.weekly_elapsed_time))
@@ -100,8 +102,8 @@ class TimerWidget(QWidget):
 
     def update_total_timer_label(self):
         t = self.total_elapsed_time
-        minutes = t//60
-        hours = (t // 3600) % 24
+        minutes = t % 60
+        hours = (t // 3600) % 60
         days = t // (3600 * 24)
         self.total_time_label.setText(f"Total {days} days {hours} hours {minutes} minutes")
 
